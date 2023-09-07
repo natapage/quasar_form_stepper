@@ -15,40 +15,37 @@ const step = ref(1);
     >
       <q-step
         :name="1"
-        title="Select campaign settings"
+        title="First step"
         icon="settings"
         :done="step > 1"
+        caption="description"
       >
-        For each ad campaign that you create, you can control how much you're
-        willing to spend on clicks and conversions, which networks and
-        geographical locations you want your ads to show on, and more.
+        <component :is="StepOneForm"></component>
       </q-step>
 
       <q-step
         :name="2"
-        title="Create an ad group"
-        caption="Optional"
+        title="Second step"
+        caption="description"
         icon="create_new_folder"
         :done="step > 2"
       >
-        An ad group contains one or more ads which target a shared set of
-        keywords.
+      <component :is="StepTwoForm"></component>
+
       </q-step>
 
-      <q-step :name="4" title="Create an ad" icon="add_comment">
-        Try out different ad text to see what brings in the most customers, and
-        learn how to enhance your ads using features like ad extensions. If you
-        run into any problems with your ads, find out how to tell if they're
-        running and how to resolve approval issues.
+      <q-step
+        :name="4"
+        title="Third step"
+        icon="add_comment"
+        caption="description"
+      >
+      <component :is="StepThreeForm"></component>
+
       </q-step>
 
       <template v-slot:navigation>
-        <q-stepper-navigation class="absolute-bottom-right">
-          <q-btn
-            @click="$refs.stepper.next()"
-            color="primary"
-            :label="step === 4 ? 'Finish' : 'Continue'"
-          />
+        <q-stepper-navigation class="absolute-bottom-right q-ma-lg">
           <q-btn
             v-if="step > 1"
             flat
@@ -56,6 +53,11 @@ const step = ref(1);
             @click="$refs.stepper.previous()"
             label="Back"
             class="q-ml-sm"
+          />
+          <q-btn
+            @click="$refs.stepper.next()"
+            color="primary"
+            :label="step === 4 ? 'Finish' : 'Continue'"
           />
         </q-stepper-navigation>
       </template>
