@@ -1,4 +1,7 @@
 <script setup>
+import StepOneForm from 'src/components/StepOneForm.vue';
+import StepTwoForm from 'src/components/StepTwoForm.vue';
+import StepThreeForm from 'src/components/StepThreeForm.vue';
 import { ref } from 'vue';
 
 const step = ref(1);
@@ -15,37 +18,45 @@ const step = ref(1);
     >
       <q-step
         :name="1"
-        title="First step"
+        title="Business structure"
+        caption="description"
         icon="settings"
         :done="step > 1"
-        caption="description"
       >
         <component :is="StepOneForm"></component>
       </q-step>
 
       <q-step
         :name="2"
-        title="Second step"
+        title="Bank details"
         caption="description"
         icon="create_new_folder"
         :done="step > 2"
       >
-      <component :is="StepTwoForm"></component>
+        <component :is="StepTwoForm"></component>
+      </q-step>
 
+      <q-step
+        :name="3"
+        title="Authentication"
+        caption="description"
+        icon="create_new_folder"
+        :done="step > 3"
+      >
+        <component :is="StepTwoForm"></component>
       </q-step>
 
       <q-step
         :name="4"
-        title="Third step"
-        icon="add_comment"
+        title="Overview"
+        icon="create_new_folder"
         caption="description"
       >
-      <component :is="StepThreeForm"></component>
-
+        <component :is="StepThreeForm"></component>
       </q-step>
 
       <template v-slot:navigation>
-        <q-stepper-navigation class="absolute-bottom-right q-ma-lg">
+        <q-stepper-navigation>
           <q-btn
             v-if="step > 1"
             flat
@@ -67,7 +78,7 @@ const step = ref(1);
 
 <style lang="scss" scoped>
 .fixed-step-size {
-  width: 700px;
-  height: 500px;
+  width: 800px;
+  min-height: 600px;
 }
 </style>
