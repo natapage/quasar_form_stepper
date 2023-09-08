@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { useQuasar } from 'quasar';
+// import { useQuasar } from 'quasar';
 import { ref } from 'vue';
+const props = defineProps({
+  name: String,
+  phone: String,
+  message: String,
+  accept: Boolean,
+});
 
 // const $q = useQuasar();
-
-const name = ref(null);
-const phone = ref(null);
-const message = ref(null);
-const accept = ref(false);
 
 // function onSubmit() {
 //   if (accept.value !== true) {
@@ -34,10 +35,12 @@ const accept = ref(false);
 // }
 </script>
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md" style="max-width: 70%">
     <q-form class="q-gutter-md">
+      <div>User info</div>
       <q-input
-        filled
+        dense
+        outlined
         v-model.trim="name"
         hint="Name and surname"
         label="Username"
@@ -45,7 +48,8 @@ const accept = ref(false);
       />
 
       <q-input
-        filled
+        dense
+        outlined
         v-model.trim="phone"
         label="Phone number"
         hint="Your phone number"
@@ -58,9 +62,9 @@ const accept = ref(false);
 
       <q-input
         v-model.trim="message"
-        filled
+        dense
+        outlined
         type="textarea"
-        hint="Message for order pickers"
         autogrow
         label="Message"
         :rules="[(val) => val.length <= 550 || 'Message is too long']"

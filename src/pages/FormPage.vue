@@ -2,9 +2,38 @@
 import StepOneForm from 'src/components/StepOneForm.vue';
 import StepTwoForm from 'src/components/StepTwoForm.vue';
 import StepThreeForm from 'src/components/StepThreeForm.vue';
-import { ref } from 'vue';
+import StepFourForm from 'src/components/StepFourForm.vue';
+
+import { ref, reactive } from 'vue';
 
 const step = ref(1);
+
+const formData = reactive({
+  model: '',
+  optionsListAdress: ['Option1', 'Option2', 'Option3', 'Option4', 'Option5'],
+  optionsListTypes: ['Option1', 'Option2', 'Option3', 'Option4', 'Option5'],
+  addressLine1: '',
+  city: '',
+  zip: null,
+  vat: ref(null),
+  industry: '',
+  email: '',
+  iban: null,
+  optionsListIndusrtry: [
+    'Industry1',
+    'Industry2',
+    'Industry3',
+    'Industry4',
+    'Industry5',
+  ],
+  Checkbox1: ref(false),
+  Checkbox2: ref(false),
+  Checkbox3: ref(false),
+  name: ref(null),
+  phone: ref(null),
+  message: ref(null),
+  accept: ref(false),
+});
 </script>
 
 <template>
@@ -14,7 +43,7 @@ const step = ref(1);
       ref="stepper"
       color="primary"
       animated
-      class="fixed-step-size"
+      style="width: 800px; min-height: 600px"
     >
       <q-step
         :name="1"
@@ -43,7 +72,7 @@ const step = ref(1);
         icon="create_new_folder"
         :done="step > 3"
       >
-        <component :is="StepTwoForm"></component>
+        <component :is="StepThreeForm"></component>
       </q-step>
 
       <q-step
@@ -52,18 +81,18 @@ const step = ref(1);
         icon="create_new_folder"
         caption="description"
       >
-        <component :is="StepThreeForm"></component>
+        <component :is="StepFourForm"></component>
       </q-step>
 
       <template v-slot:navigation>
-        <q-stepper-navigation>
+        <q-stepper-navigation class="absolute-bottom-right q-ma-md">
           <q-btn
             v-if="step > 1"
             flat
             color="primary"
             @click="$refs.stepper.previous()"
             label="Back"
-            class="q-ml-sm"
+            class="q-mr-sm"
           />
           <q-btn
             @click="$refs.stepper.next()"
@@ -76,9 +105,4 @@ const step = ref(1);
   </div>
 </template>
 
-<style lang="scss" scoped>
-.fixed-step-size {
-  width: 800px;
-  min-height: 600px;
-}
-</style>
+<style lang="scss" scoped></style>
