@@ -59,7 +59,6 @@ const data = reactive({
                 (val) => (val && val.length > 0) || 'Please select an address',
               ]"
             />
-
             <div>Types</div>
             <q-select
               dense
@@ -72,7 +71,6 @@ const data = reactive({
                 (val) => (val && val.length > 0) || 'Please select a type',
               ]"
             />
-
             <div>Address</div>
             <q-input
               dense
@@ -202,11 +200,9 @@ const data = reactive({
               v-model.trim="data.phone"
               label="Phone number"
               hint="Your phone number"
+              mask="+# (###) ### - ####"
               :rules="[
-                (val) =>
-                  /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/.test(
-                    val
-                  ) || 'Invalid phone number',
+                (val) => (val && val.length > 18) || 'Invalid phone number',
               ]"
             />
 
@@ -234,6 +230,9 @@ const data = reactive({
         caption="description"
       >
         <div>Please check the information</div>
+        <div v-for="item in Object.entries(data)" :key="item[0]">
+          {{ item[0] }} : {{ item[1] }}
+        </div>
       </q-step>
 
       <template v-slot:navigation>
