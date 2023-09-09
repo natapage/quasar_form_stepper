@@ -1,11 +1,12 @@
 <script setup>
+import StepOne from '../components/StepOne.vue';
+import StepTwo from '../components/StepTwo.vue';
+import StepThree from '../components/StepThree.vue';
+import StepFour from '../components/StepFour.vue';
+import { stepsMap } from '../constants/constants';
+
 import { ref, reactive } from 'vue';
-import {
-  optionsListTypes,
-  optionsListAddress,
-  optionsListIndusrtry,
-  stepsMap,
-} from '../constants/constants';
+import { provide } from 'vue';
 
 const step = ref(1);
 
@@ -15,18 +16,20 @@ const data = reactive({
   addressLine: '',
   city: '',
   zip: null,
-  vat: ref(null),
+  vat: null,
   industry: '',
   email: '',
   iban: null,
-  checkbox1: ref(false),
-  checkbox2: ref(false),
-  checkbox3: ref(false),
-  name: ref(null),
-  phone: ref(null),
-  message: ref(null),
-  accept: ref(false),
+  checkbox1: false,
+  checkbox2: false,
+  checkbox3: false,
+  name: null,
+  phone: null,
+  message: null,
+  accept: false,
 });
+
+provide('data', data);
 </script>
 
 <template>
@@ -45,64 +48,7 @@ const data = reactive({
         icon="settings"
         :done="step > 1"
       >
-        <div class="q-pa-md" style="max-width: 70%">
-          <q-form class="q-gutter-md">
-            <div>Buisness adress</div>
-            <q-select
-              dense
-              size="sm"
-              outlined
-              v-model="data.address"
-              :options="optionsListAddress"
-              label="Select an address"
-              :rules="[
-                (val) => (val && val.length > 0) || 'Please select an address',
-              ]"
-            />
-            <div>Types</div>
-            <q-select
-              dense
-              size="sm"
-              outlined
-              v-model="data.type"
-              :options="optionsListTypes"
-              label="Select a type"
-              :rules="[
-                (val) => (val && val.length > 0) || 'Please select a type',
-              ]"
-            />
-            <div>Address</div>
-            <q-input
-              dense
-              outlined
-              v-model.trim="data.addressLine"
-              label="Address"
-              :rules="[
-                (val) => (val && val.length > 0) || 'Please type an address',
-              ]"
-            />
-            <q-input
-              dense
-              outlined
-              v-model="data.city"
-              label="City"
-              :rules="[
-                (val) => (val && val.length > 0) || 'Please type a city',
-              ]"
-            />
-            <q-input
-              dense
-              outlined
-              v-model.trim="data.zip"
-              label="Zip code"
-              type="number"
-              :rules="[
-                (val) =>
-                  (val && val.length === 6) || 'Please type a 6 digit zip code',
-              ]"
-            />
-          </q-form>
-        </div>
+        <component :is="StepOne" />
       </q-step>
 
       <q-step
@@ -112,66 +58,7 @@ const data = reactive({
         icon="create_new_folder"
         :done="step > 2"
       >
-        <div class="q-pa-md" style="max-width: 70%">
-          <q-form class="q-gutter-md">
-            <div>VAT</div>
-            <q-input
-              type="number"
-              dense
-              outlined
-              v-model.trim="data.vat"
-              label="VAT number"
-              :rules="[
-                (val) =>
-                  (val && val.length >= 8 && val.length <= 12) ||
-                  'Please type a 8-12 digits number',
-              ]"
-            />
-
-            <div>Indusrty</div>
-            <q-select
-              dense
-              size="sm"
-              outlined
-              v-model="data.industry"
-              :options="optionsListIndusrtry"
-              label="Please select your industry"
-            />
-
-            <div>Organization e-meil</div>
-            <q-input
-              dense
-              outlined
-              v-model.trim="data.email"
-              label="e-mail"
-              :rules="[
-                (val) =>
-                  (val &&
-                    val.length > 6 &&
-                    val.includes('@') &&
-                    val.includes('.')) ||
-                  'Please type an email',
-              ]"
-            />
-            <div>IBAN</div>
-            <q-input
-              dense
-              outlined
-              v-model.trim="data.iban"
-              label="IBAN"
-              placeholder="Please enter your IBAN"
-              :rules="[
-                (val) =>
-                  (val && val.length === 12) || 'Please type a 12 chars code',
-              ]"
-            />
-            <div class="row">
-              <q-checkbox v-model="data.checkbox1" label="Something 1" />
-              <q-checkbox v-model="data.checkbox2" label="Something 2" />
-              <q-checkbox v-model="data.checkbox3" label="Something 3" />
-            </div>
-          </q-form>
-        </div>
+        <component :is="StepTwo" />
       </q-step>
 
       <q-step
@@ -181,46 +68,7 @@ const data = reactive({
         icon="create_new_folder"
         :done="step > 3"
       >
-        <div class="q-pa-md" style="max-width: 70%">
-          <q-form class="q-gutter-md">
-            <div>User info</div>
-            <q-input
-              dense
-              outlined
-              v-model.trim="data.name"
-              label="Username"
-              :rules="[
-                (val) => (val && val.length > 0) || 'Please type something',
-              ]"
-            />
-
-            <q-input
-              dense
-              outlined
-              v-model.trim="data.phone"
-              label="Phone number"
-              hint="Your phone number"
-              mask="+# (###) ### - ####"
-              :rules="[
-                (val) => (val && val.length > 18) || 'Invalid phone number',
-              ]"
-            />
-
-            <q-input
-              dense
-              outlined
-              type="textarea"
-              autogrow
-              label="Message"
-              v-model.trim="data.message"
-            />
-
-            <q-toggle
-              v-model="data.accept"
-              label="I accept the license and terms"
-            />
-          </q-form>
-        </div>
+        <component :is="StepThree" />
       </q-step>
 
       <q-step
@@ -229,10 +77,7 @@ const data = reactive({
         icon="create_new_folder"
         caption="description"
       >
-        <div>Please check the information</div>
-        <div v-for="item in Object.entries(data)" :key="item[0]">
-          {{ item[0] }} : {{ item[1] }}
-        </div>
+        <component :is="StepFour" />
       </q-step>
 
       <template v-slot:navigation>
