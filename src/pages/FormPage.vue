@@ -28,24 +28,10 @@ const data = reactive({
   accept: false,
 });
 
-const onFinishClick = () => {
-  data.type = '';
-  data.address = '';
-  data.addressLine = '';
-  data.city = '';
-  data.zip = null;
-  data.vat = null;
-  data.industry = '';
-  data.email = '';
-  data.iban = null;
-  data.checkbox1 = false;
-  data.checkbox2 = false;
-  data.checkbox3 = false;
-  data.name = null;
-  data.phone = null;
-  data.message = null;
-  data.accept = false;
+const initialFormState = { ...data };
 
+const onFinishClick = () => {
+  Object.assign(data, initialFormState);
   step.value = 1;
 };
 
