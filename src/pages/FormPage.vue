@@ -9,7 +9,7 @@ import { provide } from 'vue';
 
 const step = ref(1);
 
-const data = reactive({
+const initialFormState = {
   type: '',
   address: '',
   addressLine: '',
@@ -26,11 +26,11 @@ const data = reactive({
   phone: null,
   message: null,
   accept: false,
-});
+};
 
-const initialFormState = { ...data };
+const data = reactive({ ...initialFormState });
 
-const onFinishClick = () => {
+const resetForm = () => {
   Object.assign(data, initialFormState);
   step.value = 1;
 };
@@ -97,7 +97,7 @@ provide('data', data);
             class="q-mr-sm"
           />
           <q-btn
-            @click="() => (step < 4 ? $refs.stepper.next() : onFinishClick())"
+            @click="() => (step < 4 ? $refs.stepper.next() : resetForm())"
             color="primary"
             :disable="
               stepsMap[step]?.some((el) => {
