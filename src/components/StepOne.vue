@@ -8,7 +8,7 @@ const data = inject('data') as DataType;
 <template>
   <div class="q-pa-md" style="max-width: 70%">
     <q-form class="q-gutter-md">
-      <div>Buisness adress</div>
+      <div>Buisness address</div>
       <q-select
         dense
         size="sm"

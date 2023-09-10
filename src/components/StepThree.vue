@@ -23,8 +23,8 @@ const data = inject('data') as DataType;
         v-model.trim="data.phone"
         label="Phone number"
         hint="Your phone number"
-        mask="+# (###) ### - ####"
-        :rules="[(val) => (val && val.length > 18) || 'Invalid phone number']"
+        mask="+# (###) ### - ##-##"
+        :rules="[(val) => (val && val.length > 19) || 'Invalid phone number']"
       />
 
       <q-input

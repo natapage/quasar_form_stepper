@@ -4,7 +4,6 @@ import StepTwo from '../components/StepTwo.vue';
 import StepThree from '../components/StepThree.vue';
 import StepFour from '../components/StepFour.vue';
 import { stepsMap } from '../constants/constants';
-
 import { ref, reactive } from 'vue';
 import { provide } from 'vue';
 
@@ -28,6 +27,27 @@ const data = reactive({
   message: null,
   accept: false,
 });
+
+const onFinishClick = () => {
+  data.type = '';
+  data.address = '';
+  data.addressLine = '';
+  data.city = '';
+  data.zip = null;
+  data.vat = null;
+  data.industry = '';
+  data.email = '';
+  data.iban = null;
+  data.checkbox1 = false;
+  data.checkbox2 = false;
+  data.checkbox3 = false;
+  data.name = null;
+  data.phone = null;
+  data.message = null;
+  data.accept = false;
+
+  step.value = 1;
+};
 
 provide('data', data);
 </script>
@@ -91,7 +111,7 @@ provide('data', data);
             class="q-mr-sm"
           />
           <q-btn
-            @click="$refs.stepper.next()"
+            @click="() => (step < 4 ? $refs.stepper.next() : onFinishClick())"
             color="primary"
             :disable="
               stepsMap[step]?.some((el) => {
